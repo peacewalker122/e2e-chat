@@ -2,11 +2,15 @@
 
 # To Run
 ---
+
 Server
 ```bash
 uv sync
-python server/main.py
+fastapi dev server/main.py
 ```
 
 Client
-SOON
+```bash
+uv sync
+python client/main.py
+```
