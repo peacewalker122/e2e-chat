@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from pydantic import ValidationError
 
 from model import Message
 
@@ -55,5 +56,16 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
 
             if data and msg:
                 await manager.send_message(msg)
+    except ValidationError as e:
+        await manager.send_message(
+            Message(
+                sender_id=user_id,
+                receiver_id=user_id,
+                message=str(e),
+                command="error",
+                timestamp=0,
+                checksum=None,
+            )
+        )
     except WebSocketDisconnect:
         manager.disconnect(user_id)

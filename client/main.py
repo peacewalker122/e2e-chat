@@ -15,10 +15,13 @@ async def main():
             private_key = parameter.generate_private_key()
             public_key = private_key.public_key()
 
-            server = Client(private_key, public_key)
+            server = Client()
             await server.client(ws, user_id="122", peer_id="123")
     except websockets.exceptions.ConnectionClosedError as e:
         print(f"WebSocket connection closed: {e}")
+    except KeyboardInterrupt:
+        print("WebSocket connection closed by user")
+        exit(0)
     except Exception as e:
         print(f"An error occurred: {e}")
 
