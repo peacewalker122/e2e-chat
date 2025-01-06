@@ -7,4 +7,4 @@ class Message(BaseModel):
     message: str
     command: str
     timestamp: int
-    checksum: str | None
+    checksum: str | None = None

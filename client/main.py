@@ -1,30 +1,27 @@
 import asyncio
-import websockets
-from cryptography.hazmat.primitives.asymmetric import dh
 
+import argparse
 from client import Client
 
 
-async def main():
-    server_uri = f"ws://localhost:8000/ws/chat/{123}"
-
+async def main(client_id: str, peer_id: str):
     try:
-        async with websockets.connect(server_uri) as ws:
-            parameter = dh.generate_parameters(generator=2, key_size=2048)
-
-            private_key = parameter.generate_private_key()
-            public_key = private_key.public_key()
-
-            server = Client()
-            await server.client(ws, user_id="122", peer_id="123")
-    except websockets.exceptions.ConnectionClosedError as e:
-        print(f"WebSocket connection closed: {e}")
-    except KeyboardInterrupt:
-        print("WebSocket connection closed by user")
-        exit(0)
+        client = Client(client_id, server_id=peer_id)
+        await client.client()
     except Exception as e:
         print(f"An error occurred: {e}")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    parser = argparse.ArgumentParser(description="E2E Chat Client")
+
+    _ = parser.add_argument("-c", "--client-id", required=True, help="Your client ID")
+    _ = parser.add_argument(
+        "-p", "--peer-id", required=True, help="Peer ID to chat with"
+    )
+
+    args = parser.parse_args()
+    client_id = str(args.client_id)
+    peer_id = str(args.peer_id)
+
+    asyncio.run(main(client_id, peer_id))

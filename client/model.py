@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+import time
 
 
 class Message(BaseModel):
@@ -6,5 +7,5 @@ class Message(BaseModel):
     receiver_id: str
     message: str
     command: str
-    timestamp: int
-    checksum: str | None
+    timestamp: int = Field(default_factory=lambda: int(time.time()))
+    checksum: str | None = Field(default=None)

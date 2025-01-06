@@ -9,6 +9,9 @@ if __name__ == "__main__":
     client2 = ECDHKeyExchange()
     client2_public = client2.get_public_bytes()
 
+    print(client1_public.hex())
+    print(client2_public.hex())
+
     # Exchange public keys (in a real scenario, this would happen over a network)
     # Client 1 generates shared secret using Client 2's public key
     shared_secret1, salt = client1.generate_shared_secret(client2_public)

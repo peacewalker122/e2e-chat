@@ -34,6 +34,9 @@ class ECDHKeyExchange:
         except ValueError as e:
             raise ValueError(f"Invalid public key: {e}")
 
+    def sign(self, message: bytes) -> bytes:
+        return self.private_key.sign(message, ec.ECDSA(hashes.SHA256()))
+
     def generate_shared_secret(
         self, peer_public_bytes: bytes, salt: bytes | None = None
     ) -> tuple[bytes, bytes]:
