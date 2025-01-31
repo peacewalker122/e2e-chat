@@ -2,10 +2,7 @@ from cgitb import enable
 from imaplib import Commands
 from ecdh import ECDHKeyExchange
 from model import Message
-from websocket import WebSocket, enableTrace, WebSocketApp
-
-import time
-import rel
+from websocket import WebSocket, WebSocketApp
 
 
 class Client:
@@ -97,7 +94,6 @@ class Client:
         serialized_public_key = self.ecdh.get_public_bytes()
         server_uri = f"ws://localhost:8000/ws/chat/{self.client_id}"
 
-        enableTrace(True)
         ws = WebSocketApp(
             server_uri,
             on_message=self.on_message,
