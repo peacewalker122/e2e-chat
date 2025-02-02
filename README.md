@@ -18,6 +18,9 @@ This is the client that will be used to connect to the server and send and recei
 3) **fe/**
 This is the frontend that will be used to connect to the server and send, receive messages, show our & peer messages.
 
+4) **deploy/**
+This is the directory that will be used to deploy the app to a server. It contains the configuration for the docker-compose and the traefik configuration
+
 ## How to use
 1) create the virtual environment for the server first
 ```bash
