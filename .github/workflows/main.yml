@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: GHCR_TOKEN
 
     steps:
       - name: Checkout Code
@@ -19,13 +20,13 @@ jobs:
       - name: Build & Push Frontend Image
         run: |
           FRONTEND_IMAGE=ghcr.io/${{ secrets.GHCR_USERNAME }}/vite-frontend:latest
-          docker build -t $FRONTEND_IMAGE -f Dockerfile.frontend .
+          docker build -t $FRONTEND_IMAGE -f fe/dockerfile .
           docker push $FRONTEND_IMAGE
 
       - name: Build & Push Backend Image
         run: |
           BACKEND_IMAGE=ghcr.io/${{ secrets.GHCR_USERNAME }}/ws-backend:latest
-          docker build -t $BACKEND_IMAGE -f Dockerfile.backend .
+          docker build -t $BACKEND_IMAGE -f server/Dockerfile .
           docker push $BACKEND_IMAGE
 
       - name: Upload docker-compose.yml to VPS
