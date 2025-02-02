@@ -3,7 +3,7 @@ name: Deploy Full-Stack Vite + WebSocket App
 on:
   push:
     branches:
-      - main
+      - v.0
 
 jobs:
   deploy:
@@ -28,14 +28,14 @@ jobs:
           docker build -t $BACKEND_IMAGE -f Dockerfile.backend .
           docker push $BACKEND_IMAGE
 
-      - name: Upload Docker Compose to VPS
+      - name: Upload docker-compose.yml to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml"
-          target: "~/"
+          source: "production.yml"
+          target: "/home/docker-compose.yml"
 
       - name: SSH into VPS & Deploy with Docker Compose
         uses: appleboy/ssh-action@master
