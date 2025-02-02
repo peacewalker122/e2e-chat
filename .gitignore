@@ -10,5 +10,13 @@ wheels/
 # Virtual environments
 .venv
 
+# ENV
+.env
+
 # Certificates
 *.pem
+*.crt
+*.key
+
+letsencrypt/
+node_modules/

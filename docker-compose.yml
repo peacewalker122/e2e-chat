@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: "traefik:v3.1"
+    container_name: "traefik"
+    restart: always
+    command:
+      - "--api.insecure=true"  # Enable Traefik dashboard (for testing)
+      - "--providers.docker=true"  # Enable automatic service discovery
+      - "--entrypoints.web.address=:80"  # HTTP port
+      - "--entrypoints.websecure.address=:443"  # HTTPS port
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      # Local SSL config using file provider
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # Traefik dashboard (optional)
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Allows Traefik to detect containers
+      - "./deploy/traefik:/etc/traefik/dynamic:ro"
+
+  frontend:
+    image: "web-client"
+    container_name: "chatapp-frontend"
+    restart: always
+    environment:
+        VITE_ENV: development-traefik
+        VITE_WS_URL: ws://localhost/ws
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`localhost`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls=true"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+
+  backend:
+    image: "relay-server"
+    container_name: "relay-server"
+    restart: always
+    labels:
+      - "traefik.http.routers.websocket.rule=Host(`localhost`) && PathPrefix(`/ws`)"
+      - "traefik.http.routers.websocket.entrypoints=websecure"
+      - "traefik.http.routers.websocket.tls=true"
+      - "traefik.http.routers.websocket.tls.certresolver=myresolver"
+      - "traefik.http.services.websocket.loadbalancer.server.port=8000"
+      # Add middleware to strip prefix
+      - "traefik.http.middlewares.strip-ws-prefix.stripprefix.prefixes=/ws"
+      - "traefik.http.routers.websocket.middlewares=strip-ws-prefix@docker"

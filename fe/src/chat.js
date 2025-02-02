@@ -1,3 +1,4 @@
+import { BASE_URL } from "./config.js";
 // Parse the peerId from the query parameter
 const urlParams = new URLSearchParams(window.location.search);
 const peerId = urlParams.get("peerId");
@@ -57,7 +58,7 @@ async function deriveSharedKey(peerPublicKey) {
 	);
 
 	console.log("stored key");
-	window.localStorage.setItem(`shared-key:{peerId}`, sharedKey);
+	// window.localStorage.setItem(`shared-key:{peerId}`, sharedKey);
 }
 
 // Encryption function
@@ -128,12 +129,11 @@ function initChat() {
 	if (!peerId) {
 		messagesDiv.textContent = "No Peer ID provided!";
 		return;
-	} else {
-		messagesDiv.textContent = `Connected with Peer ID: ${peerId}`;
 	}
+	messagesDiv.textContent = `Connected with Peer ID: ${peerId}`;
 
-	// Create a WebSocket connection
-	const ws = new WebSocket(`ws://localhost:8000/ws/chat/${userId}`);
+	// Create a WebSocket connection using the base URL
+	const ws = new WebSocket(`${BASE_URL}/chat/${userId}`);
 
 	// Listen for connection open
 	ws.addEventListener("open", async () => {
@@ -143,7 +143,7 @@ function initChat() {
 	});
 
 	// Keep track of key exchange state
-	let keyExchangeState = {
+	const keyExchangeState = {
 		initiated: false,
 		completed: false,
 		retries: 0,

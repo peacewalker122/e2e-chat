@@ -64,7 +64,12 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.websocket("/ws/chat/{user_id}")
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
+@app.websocket("/chat/{user_id}")
 async def websocket_endpoint(websocket: WebSocket, user_id: str):
     await manager.connect(user_id, websocket)
     try:
