@@ -24,7 +24,7 @@ services:
       - "./letsencrypt:/letsencrypt"  # Persist Let's Encrypt certificates
 
   frontend:
-    image: "web-client"
+    image: "ghcr.io/peacewalker122/e2e-chat:latest-fe"
     container_name: "chatapp-frontend"
     restart: always
     environment:
@@ -39,7 +39,7 @@ services:
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
 
   backend:
-    image: "relay-server"
+    image: "ghcr.io/peacewalker122/e2e-chat:latest-be"
     container_name: "relay-server"
     restart: always
     labels:
