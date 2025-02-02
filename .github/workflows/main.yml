@@ -3,7 +3,7 @@ name: Deploy Full-Stack Vite + WebSocket App
 on:
   push:
     branches:
-      - v0
+      - v.0
 
 jobs:
   deploy:
