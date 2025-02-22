@@ -14,6 +14,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Add Config Directory on server
+        run: mkdir -p server/config
+
+      - name: Add Config file on server
+        run: echo "${{ secrets.REPO_CONFIG }}" > server/config/config.yml
+
       - name: Log in to GitHub Container Registry (GHCR)
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
 
