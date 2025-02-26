@@ -1,0 +1,95 @@
+.container {
+  position: relative;
+  max-width: 1200px;
+  padding: 2rem;
+
+  scroll-behavior: smooth;
+  border: 2px solid black;
+  border-radius: 20px;
+
+  h1 {
+    font-size: 4.5rem;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+
+  label {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+  }
+
+  input {
+    border: 2px solid black;
+
+    padding: 1rem;
+    margin: 10px;
+
+    border-radius: 10px;
+  }
+
+  button {
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    border-radius: 10px;
+    font-weight: bold;
+
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+}
+
+.footer {
+  display: grid;
+  margin-top: 1rem;
+  padding: 2rem;
+
+  button {
+    background-color: black;
+    color: white;
+    padding: 1rem;
+
+    border-radius: 10px;
+  }
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+  text-align: center;
+
+  .button {
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    border-radius: 10px;
+    font-weight: bold;
+
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+}
