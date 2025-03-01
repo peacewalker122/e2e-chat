@@ -24,3 +24,4 @@ e2echat.json
 
 letsencrypt/
 node_modules/
+.idea/

@@ -1,0 +1,65 @@
+aside {
+	position: fixed;
+	display: flex; /* Enable flexbox */
+	flex-direction: column; /* Stack children vertically */
+	left: 0;
+	top: 0;
+	bottom: 0;
+	background-color: black;
+	transform: translateX(0);
+	transition: 0.15s ease transform;
+	width: 20%;
+
+	padding: 0 1rem 0 1rem;
+}
+
+aside.show {
+	transform: translateX(100%);
+}
+
+aside .menu {
+	/* Remove position: fixed as it takes the element out of flow */
+	height: 10%;
+	z-index: 10;
+	display: flex;
+	justify-content: flex-end;
+}
+
+aside button img {
+	width: 2rem;
+	height: 2rem;
+}
+
+aside button {
+	background: transparent;
+	border: none;
+	position: relative;
+	transition: all 0.3s ease;
+}
+
+aside button:hover {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px
+		rgba(255, 255, 255, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.1);
+	transform: scale(1.05);
+	border-radius: 8px;
+}
+
+aside button:active {
+	background: rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0 5px rgba(255, 255, 255, 0.3), inset 0 0 5px
+		rgba(255, 255, 255, 0.2);
+	transform: scale(0.98);
+}
+
+.chats {
+	flex: 1; /* Take remaining space */
+	overflow-y: auto; /* Enable scrolling if content overflows */
+	padding: 1rem; /* Add some padding */
+}
+
+.chats p {
+	color: white;
+	margin: 0.5rem 0; /* Add some vertical spacing between chat items */
+}
